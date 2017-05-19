@@ -72,6 +72,13 @@ export default {
       deep:true//设置该属性是为了改变数组的某个key属性时，也见检测到变化
     }
   },
+  //钩子函数，用来在刷新浏览器时充重置各个数据的编辑状态
+  compiled () {
+    for(var i = 0;i<this.todos.length;i++){
+      var item = this.todos[i];
+      item.isEditing = false;
+    };
+  },
   computed: {
     filteredItems () {
       return filters[this.showType](this.todos);
@@ -102,7 +109,8 @@ export default {
         this.todos.push({
           id:this.todos.length,
           label:this.newItem,
-          isFinished:false
+          isFinished:false,
+          isEditing:false
         });
 
         this.newItem = '';
